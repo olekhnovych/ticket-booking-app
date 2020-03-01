@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+export POSTGRES_HOST=localhost
+export POSTGRES_PORT=5432
+export POSTGRES_DATABASE=dev
+export POSTGRES_USER=dev
+export POSTGRES_PASSWORD=dev
+
+export HTTP_INTERFACE=localhost
+export HTTP_PORT=8080
+
+exec "$@"
