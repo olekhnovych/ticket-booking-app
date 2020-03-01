@@ -25,6 +25,7 @@ lazy val ticketbooking = (project in file("."))
       val testContainersVersion    = "0.35.2"
       val loggingVersion           = "3.9.2"
       val logbackVersion           = "1.2.3"
+      val pureconfigVersion        = "0.12.3"
 
       Seq(
         "com.typesafe.akka" %% "akka-http-core"       % akkaHttpVersion,
@@ -52,6 +53,8 @@ lazy val ticketbooking = (project in file("."))
 
         "com.typesafe.scala-logging" %% "scala-logging"   % loggingVersion,
         "ch.qos.logback"             %  "logback-classic" % logbackVersion,
+
+        "com.github.pureconfig" %% "pureconfig" % pureconfigVersion,
       )
     }
   )
