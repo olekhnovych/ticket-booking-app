@@ -16,5 +16,5 @@ package object dao {
 
   val dropIfExistsStatements = schemas.dropIfExists.statements.map(statement => s"${statement} cascade").toList
   val createStatements = schemas.create.statements.toList
-  val truncateStatements = schemas.truncate.statements.toList
+  val truncateStatements = schemas.truncate.statements.map(statement => s"${statement} cascade").toList
 }
