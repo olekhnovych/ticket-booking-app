@@ -22,6 +22,7 @@ lazy val ticketbooking = (project in file("."))
       val slickPgVersion           = "0.18.1"
       val postgresqlVersion        = "42.2.5"
       val monocleVersion           = "2.0.0"
+      val testContainersVersion    = "0.35.2"
       val loggingVersion           = "3.9.2"
       val logbackVersion           = "1.2.3"
 
@@ -45,6 +46,9 @@ lazy val ticketbooking = (project in file("."))
         "com.github.julien-truffaut" %%  "monocle-core"  % monocleVersion,
         "com.github.julien-truffaut" %%  "monocle-macro" % monocleVersion,
         "com.github.julien-truffaut" %%  "monocle-law"   % monocleVersion % Test,
+
+        "com.dimafeng" %% "testcontainers-scala-scalatest"  % testContainersVersion % Test,
+        "com.dimafeng" %% "testcontainers-scala-postgresql" % testContainersVersion % Test,
 
         "com.typesafe.scala-logging" %% "scala-logging"   % loggingVersion,
         "ch.qos.logback"             %  "logback-classic" % logbackVersion,
