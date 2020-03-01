@@ -7,7 +7,7 @@ import DatabaseProfile.api._
 
 case class Reservation(personName: String,
                        personSurname: String,
-                       amountToPay: Double,
+                       totalAmountToPay: Double,
                        expirationTime: DateTime,
                        confirmed: Boolean,
                        screeningTimeId: Id,
@@ -30,4 +30,6 @@ class Reservations(tag: Tag) extends Table[Reservation](tag, "reservations") {
 
 
 object reservations extends TableQuery(new Reservations(_)) {
+  def getById(id: Id) =
+    this.filter(_.id === id)
 }

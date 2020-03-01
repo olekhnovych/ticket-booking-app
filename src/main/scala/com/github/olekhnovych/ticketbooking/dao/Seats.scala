@@ -21,4 +21,6 @@ class Seats(tag: Tag) extends Table[Seat](tag, "seats") {
 
 
 object seats extends TableQuery(new Seats(_)) {
+  def getByIds(ids: Seq[Id]) =
+    this.filter(_.id.inSet(ids))
 }

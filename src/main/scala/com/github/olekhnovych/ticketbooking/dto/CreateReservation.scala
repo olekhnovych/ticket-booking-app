@@ -6,7 +6,11 @@ import spray.json.DefaultJsonProtocol
 
 case class CreateReservation(person: Person,
                              screeningTimeId: Id,
-                             reservationSeats: List[ReservationSeat])
+                             reservationSeats: List[ReservationSeat]) {
+
+  def seatIds = reservationSeats.map(_.seatId)
+  def ticketTypes = reservationSeats.map(_.ticketType)
+}
 
 
 trait CreateReservationJsonSupport extends SprayJsonSupport
