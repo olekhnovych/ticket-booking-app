@@ -88,10 +88,12 @@ trait ReservationsServiceComponent {
                validateNoSinglePlaceBetweenReserved(reservedSeats, userReservedSeats)
 
                val expirationTime = screeningTime.startTime.minus(Period.minutes(15))           //TODO is it correct?
+               val confirmationExpirationTime = now.plus(Period.minutes(15))
+
                val totalAmount = createReservation.ticketTypes.map(ticketPricesService.getTicketPrice _).sum[Double]
 
                val person = createReservation.person
-               val daoReservation = dao.Reservation(person.name, person.surname, totalAmount, expirationTime, false, createReservation.screeningTimeId)
+               val daoReservation = dao.Reservation(person.name, person.surname, totalAmount, expirationTime, false, confirmationExpirationTime, createReservation.screeningTimeId)
                dao.reservations.returning(dao.reservations) += daoReservation
              };
              _ <- {

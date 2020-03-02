@@ -10,6 +10,7 @@ case class Reservation(personName: String,
                        totalAmountToPay: Double,
                        expirationTime: DateTime,
                        confirmed: Boolean,
+                       confirmationExpirationTime: DateTime,
                        screeningTimeId: Id,
                        id: Option[Id]=None)
 
@@ -21,8 +22,9 @@ class Reservations(tag: Tag) extends Table[Reservation](tag, "reservations") {
   def amountToPay = column[Double]("amount_to_pay")
   def expirationTime = column[DateTime]("expiration_time")
   def confirmed = column[Boolean]("confirmed")
+  def confirmationExpirationTime = column[DateTime]("confirmation_expiration_time")
   def screeningTimeId  = column[Id]("screening_time_id")
-  def * = (personName, personSurname, amountToPay, expirationTime, confirmed, screeningTimeId, id.?) <> (Reservation.tupled, Reservation.unapply)
+  def * = (personName, personSurname, amountToPay, expirationTime, confirmed, confirmationExpirationTime, screeningTimeId, id.?) <> (Reservation.tupled, Reservation.unapply)
 
   def screeningTime = foreignKey("reservations_screening_time_fkey", screeningTimeId, screeningTimes)(_.id, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
   def uniquePerson = index("reservations_unique_person_idx", (personName, personSurname, screeningTimeId), unique=true)
