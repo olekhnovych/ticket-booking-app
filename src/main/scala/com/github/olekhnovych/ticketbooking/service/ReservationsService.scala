@@ -112,5 +112,13 @@ trait ReservationsServiceComponent {
       database.run {
         dao.reservations.getById(reservationId).map(_.confirmed).update(true)
       }.map(x => ())
+
+    def deleteExpiredReservations() = {
+      val now = dateTimeFactory.now
+      database.run {
+        dao.reservations.filter(reservation => reservation.expirationTime > now ||
+                                              (reservation.confirmationExpirationTime > now && !reservation.confirmed)).delete
+      }
+    }
   }
 }
