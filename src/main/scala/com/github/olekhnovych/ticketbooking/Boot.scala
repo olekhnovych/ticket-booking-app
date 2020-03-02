@@ -25,6 +25,7 @@ trait Components extends
     with ActorSystemComponent
     with ExecutionContextComponent
     with HttpComponent
+    with BackgroundComponent
 
 
 object Registry extends Components {
@@ -42,5 +43,6 @@ object Registry extends Components {
 
 
 object Boot extends App {
+  Registry.startBackgroud()
   Registry.httpBindAndHandle()
 }
