@@ -8,7 +8,7 @@ import spray.json.DefaultJsonProtocol
 
 
 trait DateTimeUnmarshaller {
-  private val formatter : DateTimeFormatter = ISODateTimeFormat.dateTimeNoMillis()
+  private val formatter : DateTimeFormatter = ISODateTimeFormat.basicDateTimeNoMillis()
 
   implicit val dateTimeFromStringUnmarshaller: Unmarshaller[String, DateTime] =
     Unmarshaller.strict[String, DateTime](formatter.parseDateTime)
