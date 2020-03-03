@@ -7,6 +7,6 @@ export POSTGRES_USER=dev
 export POSTGRES_PASSWORD=dev
 
 export HTTP_INTERFACE=localhost
-export HTTP_PORT=8080
+export HTTP_PORT=8082
 
 exec "$@"

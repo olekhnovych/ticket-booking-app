@@ -1,5 +1,7 @@
 import sbt.Keys.version
 
+enablePlugins(JavaAppPackaging)
+
 organization in ThisBuild := "com.github.olekhnovych"
 scalaVersion in ThisBuild := "2.12.8"
 
