@@ -7,10 +7,10 @@ package object dao {
 
   import DatabaseProfile.api._
 
-  val schemas = screeningTimes.schema ++
+  val schemas = screeningRooms.schema ++
                 movies.schema ++
                 seats.schema ++
-                screeningRooms.schema ++
+                screeningTimes.schema ++
                 reservations.schema ++
                 reservationSeats.schema
 
