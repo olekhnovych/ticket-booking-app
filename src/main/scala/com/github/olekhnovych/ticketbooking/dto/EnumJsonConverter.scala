@@ -16,10 +16,10 @@ class EnumJsonConverter[T <: scala.Enumeration](enu: T) extends RootJsonFormat[T
           enu.withName(txt)
         } match {
           case Success(value) => value
-          case _ =>  throw DeserializationException(s"Expected a value from enum $enu instead of $txt")
+          case _ => throw ServiceError.badRequest("INVALID_VALUE", s"Expected a value from enum $enu instead of $txt")
         }
       }
-      case somethingElse => throw DeserializationException(s"Expected a value from enum $enu instead of $somethingElse")
+      case somethingElse => throw ServiceError.badRequest("INVALID_VALUE", s"Expected a value from enum $enu instead of $somethingElse")
     }
   }
 }

@@ -6,7 +6,7 @@ import com.github.olekhnovych.ticketbooking.{dao => dao, dto => dto}
 import dao.DatabaseProfile.api._
 
 
-trait ReservationsServiceComponent {
+trait ReservationsServiceComponent extends Validation {
   this: DatabaseComponent
       with ExecutionContextComponent
       with DateTimeFactoryComponent
@@ -42,33 +42,6 @@ trait ReservationsServiceComponent {
                                   })
          }).transactionally
       }
-
-    def validateOneSeatAtLeast(createReservation: dto.CreateReservation): Unit =
-      if (!(createReservation.reservationSeats.size >= 1))
-        throw new Exception("There should be one seat at least")
-
-    def validateAtLeast15minBeforeStart(screeningTime: dao.ScreeningTime, now: DateTime): Unit =
-      if (!(now.isBefore(screeningTime.startTime.minus(Period.minutes(15)))))
-        throw new Exception("Seats should be booked at least 15 monutes before the screening starts.")
-
-    def validateSeatsBelogToScreeningRoom(createReservation: dto.CreateReservation, screeningRoomSeats: Seq[dao.Seat]): Unit =
-      if (!createReservation.reservationSeats.map(_.seatId).forall(screeningRoomSeats.map(_.id.get).contains(_)))
-        throw new Exception("Invalid seat id.")
-
-    def validateSeatsAreNotAlreadyReserved(createReservation: dto.CreateReservation, reservedSeats: Seq[dao.Seat]) =
-      if (createReservation.reservationSeats.map(_.seatId).forall(reservedSeats.map(_.id.get).contains(_)))
-        throw new Exception("Seat is already reserved.")
-
-    def validateNoSinglePlaceBetweenReserved(reservedSeats: Seq[dao.Seat], userReservedSeats: Seq[dao.Seat]) = {
-      val noSinglePlace = (reservedSeats ++ userReservedSeats).groupBy(_.row).values
-        .forall(row => row.isEmpty || {
-                  val sortedSeats = row.map(_.seat).sorted
-                  sortedSeats.tail.zip(sortedSeats.init).map{case (next, prev) => next - prev}.forall(_ != 2)
-                })
-
-      if(!noSinglePlace)
-        throw new Exception("There cannot be single place left over in row between two reserved.")
-    }
 
     def createReservation(createReservation: dto.CreateReservation) = {
       val now = dateTimeFactory.now

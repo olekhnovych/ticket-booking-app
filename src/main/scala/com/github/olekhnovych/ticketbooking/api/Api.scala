@@ -6,20 +6,27 @@ import akka.http.scaladsl.model.{HttpResponse, StatusCodes}
 
 import com.typesafe.scalalogging.LazyLogging
 
+import com.github.olekhnovych.ticketbooking.{dto => dto}
 
-trait ApiComponent extends LazyLogging {
+
+trait ApiComponent
+    extends LazyLogging
+    with dto.ErrorMessageJsonSupport{
+
   this: MoviesApiComponent
       with ScreeningTimesApiComponent
       with ScreeningRoomsApiComponent
       with ReservationsApiComponent =>
 
  def exceptionHandler: ExceptionHandler =
-    ExceptionHandler {
-      case exception: Exception => {
-        logger.error("", exception)
-        complete(HttpResponse(StatusCodes.Conflict, entity=exception.getMessage()))
-      }
-    }
+   ExceptionHandler {
+     case dto.ServiceError(httpStatus, errorMessage) =>
+       complete(httpStatus, errorMessage)
+     case exception: Exception => {
+       logger.error("InternalServerError", exception)
+       complete(StatusCodes.InternalServerError, exception.getMessage())
+     }
+   }
 
   def apiRoute =
     handleExceptions(exceptionHandler) {

@@ -16,7 +16,7 @@ trait PeriodJsonSupport extends SprayJsonSupport
 
     override def read(jsValue: JsValue) : Period = jsValue match {
       case JsString(s) => formatter.parsePeriod(s)
-      case _ => throw DeserializationException("Invalid period format: " + jsValue)
+      case _ => throw ServiceError.badRequest("INVALID_PERIOD", "Invalid period format: " + jsValue)
     }
   }
 }

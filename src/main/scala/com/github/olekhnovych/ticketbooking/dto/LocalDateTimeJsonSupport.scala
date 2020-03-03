@@ -16,7 +16,7 @@ trait LocalDateTimeJsonSupport extends SprayJsonSupport
 
     override def read(jsValue: JsValue) : LocalDateTime = jsValue match {
       case JsString(s) => formatter.parseLocalDateTime(s)
-      case _ => throw DeserializationException("Invalid date format: " + jsValue)
+      case _ => throw ServiceError.badRequest("INVALID_DATETIME", "Invalid date format: " + jsValue)
     }
   }
 }

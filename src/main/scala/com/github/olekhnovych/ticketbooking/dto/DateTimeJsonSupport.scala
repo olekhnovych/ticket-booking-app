@@ -16,7 +16,7 @@ trait DateTimeJsonSupport extends SprayJsonSupport
 
     override def read(jsValue: JsValue) : DateTime = jsValue match {
       case JsString(s) => formatter.parseDateTime(s)
-      case _ => throw DeserializationException("Invalid date format: " + jsValue)
+      case _ => throw ServiceError.badRequest("INVALID_DATETIME", "Invalid date format: " + jsValue)
     }
   }
 }
