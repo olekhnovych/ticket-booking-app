@@ -8,7 +8,8 @@ scalaVersion in ThisBuild := "2.12.8"
 resolvers in ThisBuild += "confluent" at "https://packages.confluent.io/maven/"
 
 javacOptions in ThisBuild ++= Seq("-source", "1.9", "-target", "1.9")
-testOptions in Test += Tests.Argument("-oD")
+testOptions in Test += Tests.Argument("-oDF")
+javaOptions in Test += s"-Dconfig.file=${sourceDirectory.value}/test/resources/application.test.conf"
 
 lazy val ticketbooking = (project in file("."))
   .settings(

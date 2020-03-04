@@ -2,11 +2,19 @@ package com.github.olekhnovych.ticketbooking.dao
 
 import DatabaseProfile.api._
 
+import monocle.Lens
+import monocle.macros.GenLens
+
 
 case class Seat(row: Int,
                 seat: Int,
                 screeningRoomId: Id,
                 id: Option[Id]=None)
+
+
+object SeatLens {
+  lazy val id: Lens[Seat, Option[Id]] = GenLens[Seat](_.id)
+}
 
 
 class Seats(tag: Tag) extends Table[Seat](tag, "seats") {
